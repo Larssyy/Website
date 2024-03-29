@@ -1,4 +1,4 @@
-<!doctype html>
+A<!doctype html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
@@ -18,13 +18,14 @@
                 <h1>Larsy's Projects</h1>
             </div>
             <div id="repositories"></div>
+            <div id="currentlyPlaying"></div>
+            <!-- Container to display currently playing track -->
         </div>
-
-        <button onclick="showCurrentlyPlaying()">Show Currently Playing</button>
-        <!-- Added button element -->
 
         <script>
             const container = document.getElementById("repositories");
+            const currentlyPlayingContainer =
+                document.getElementById("currentlyPlaying");
 
             fetch(
                 "https://api.github.com/users/larssyy/repos?sort=stars&per_page=10",
@@ -62,13 +63,14 @@
                     console.error("Error fetching repositories:", error);
                 });
 
-            function showCurrentlyPlaying() {
-                // Fetch currently playing track information from Spotify
+            // Function to fetch and display currently playing track
+            function displayCurrentlyPlayingTrack() {
                 fetch(
                     "https://api.spotify.com/v1/me/player/currently-playing",
                     {
                         headers: {
-                            Authorization: "5097a17dfca24e8cbfc07405b53ab402",
+                            Authorization:
+                                "Bearer 5097a17dfca24e8cbfc07405b53ab402",
                         },
                     },
                 )
@@ -79,13 +81,12 @@
                             const artists = data.item.artists
                                 .map((artist) => artist.name)
                                 .join(", ");
-                            alert(
-                                `Currently playing: ${trackName} by ${artists}`,
-                            );
+                            const currentlyPlayingHTML = `<p>Currently playing: ${trackName} by ${artists}</p>`;
+                            currentlyPlayingContainer.innerHTML =
+                                currentlyPlayingHTML;
                         } else {
-                            alert(
-                                "You are not currently listening to anything.",
-                            );
+                            const noTrackHTML = `<p>You are not currently listening to anything.</p>`;
+                            currentlyPlayingContainer.innerHTML = noTrackHTML;
                         }
                     })
                     .catch((error) => {
@@ -93,9 +94,13 @@
                             "Error fetching currently playing track:",
                             error,
                         );
-                        alert("Could not retrieve currently playing track.");
+                        const errorHTML = `<p>Could not retrieve currently playing track.</p>`;
+                        currentlyPlayingContainer.innerHTML = errorHTML;
                     });
             }
+
+            // Call the function to display currently playing track when the page loads
+            displayCurrentlyPlayingTrack();
         </script>
     </body>
 </html>
