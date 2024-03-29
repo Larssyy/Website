@@ -1,4 +1,4 @@
-A<!doctype html>
+<!doctype html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
@@ -19,6 +19,9 @@ A<!doctype html>
             </div>
             <div id="repositories"></div>
         </div>
+
+        <button onclick="showCurrentlyPlaying()">Show Currently Playing</button>
+        <!-- Added button element -->
 
         <script>
             const container = document.getElementById("repositories");
@@ -58,6 +61,41 @@ A<!doctype html>
                 .catch((error) => {
                     console.error("Error fetching repositories:", error);
                 });
+
+            function showCurrentlyPlaying() {
+                // Fetch currently playing track information from Spotify
+                fetch(
+                    "https://api.spotify.com/v1/me/player/currently-playing",
+                    {
+                        headers: {
+                            Authorization: "5097a17dfca24e8cbfc07405b53ab402",
+                        },
+                    },
+                )
+                    .then((response) => response.json())
+                    .then((data) => {
+                        if (data.item) {
+                            const trackName = data.item.name;
+                            const artists = data.item.artists
+                                .map((artist) => artist.name)
+                                .join(", ");
+                            alert(
+                                `Currently playing: ${trackName} by ${artists}`,
+                            );
+                        } else {
+                            alert(
+                                "You are not currently listening to anything.",
+                            );
+                        }
+                    })
+                    .catch((error) => {
+                        console.error(
+                            "Error fetching currently playing track:",
+                            error,
+                        );
+                        alert("Could not retrieve currently playing track.");
+                    });
+            }
         </script>
     </body>
 </html>
