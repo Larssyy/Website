@@ -1,0 +1,48 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f2f2f2;
+    color: #333; /* Set default text color */
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease; /* Added color transition */
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.profile-picture img {
+    width: 50px; /* Adjust the size of the profile picture */
+    height: 50px;
+    border-radius: 50%; /* Make the picture round */
+}
+
+.repository {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px; /* Apply border-radius */
+    background-color: #f9f9f9;
+}
+
+.repository h2 {
+    margin-top: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+    /* Dark mode styles remain unchanged */
+}
